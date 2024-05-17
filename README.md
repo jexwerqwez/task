@@ -10,13 +10,13 @@ git clone git@github.com:jexwerqwez/task.git
 make all
 ````
 
-## 2. Запуск тестов:
+## 3. Запуск тестов:
 ````
 make test
 ````
 
-## 3. Удалить сгенерированные файлы:
+## 4. Удалить сгенерированные файлы:
 ````
-make test
+make clean
 ````
 
