@@ -39,13 +39,6 @@ $(OBJ_DIR):
 test: $(EXECUTABLE) $(TEST_EXECUTABLE)
 	./$(TEST_EXECUTABLE)
 
-style:
-	$(info                                         )
-	$(info ----------------------------------------)
-	$(info Check for code style and formatting     )
-	$(info ----------------------------------------)
-	clang-format -style=Google -i src/*.cc include/*.h
-
 clean:
 	rm -rf $(OBJ_DIR)
 	rm -f $(EXECUTABLE)

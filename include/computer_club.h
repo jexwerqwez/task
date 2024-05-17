@@ -16,6 +16,7 @@ class ComputerClub {
   std::string endTime_;
   int hourlyRate_;
   std::vector<std::tuple<std::string, std::string, std::string>> events_;
+  bool errorOccurred_ = false;
 
   struct Client {
     std::string name;
@@ -39,12 +40,14 @@ class ComputerClub {
   bool isValidClientName(const std::string& clientName) const;
   bool isSequentialTime(const std::string& prevTime,
                         const std::string& currTime) const;
+
   std::unique_ptr<Event> createEvent(const std::string& line);
   void processEvent(const std::unique_ptr<Event>& event);
 
  public:
   void readFromFile(const std::string& filename);
   void printData();
+
   void clientArrives(const std::string& time, const std::string& clientName,
                      std::vector<std::string>& outputEvents);
   void clientSits(const std::string& time, const std::string& clientName,

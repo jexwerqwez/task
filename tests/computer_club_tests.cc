@@ -31,13 +31,12 @@ void compareFiles(const std::string& outputFile, const std::string& expectedFile
 class ComputerClubTest : public ::testing::Test {
  protected:
     void runTest(const std::string& testInput, const std::string& expectedOutput) {
-        std::string command = "./main " + testInput + " > tests/output.txt";
+        std::string command = "./main " + testInput + " > tests/output.txt 2>&1"; // Capture stderr
         int result = system(command.c_str());
         ASSERT_EQ(result, 0) << "Execution of the command failed: " << command;
         compareFiles("tests/output.txt", expectedOutput);
     }
 };
-
 
 TEST_F(ComputerClubTest, Test1) {
     runTest("tests/test_file1_in.txt", "tests/test_file1_out.txt");
