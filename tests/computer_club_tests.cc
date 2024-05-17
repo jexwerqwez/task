@@ -62,6 +62,34 @@ TEST_F(ComputerClubTest, Test6) {
     runTest("tests/test_file6_in.txt", "tests/test_file6_out.txt");
 }
 
+TEST_F(ComputerClubTest, Test7) {
+    runTest("tests/test_file7_in.txt", "tests/test_file7_out.txt");
+}
+
+TEST_F(ComputerClubTest, Test8) {
+    runTest("tests/test_file8_in.txt", "tests/test_file8_out.txt");
+}
+
+TEST_F(ComputerClubTest, Test9) {
+    runTest("tests/test_file9_in.txt", "tests/test_file9_out.txt");
+}
+
+TEST_F(ComputerClubTest, Test10) {
+    runTest("tests/test_file10_in.txt", "tests/test_file10_out.txt");
+}
+
+TEST_F(ComputerClubTest, Test11) {
+    runTest("tests/test_file11_in.txt", "tests/test_file11_out.txt");
+}
+
+TEST_F(ComputerClubTest, Test12) {
+    runTest("tests/test_file12_in.txt", "tests/test_file12_out.txt");
+}
+
+TEST_F(ComputerClubTest, Test13) {
+    runTest("tests/test_file13_in.txt", "tests/test_file13_out.txt");
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

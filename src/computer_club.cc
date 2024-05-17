@@ -90,15 +90,13 @@ void ComputerClub::readFromFile(const std::string& filename) {
   int lineNum = 1;
 
   if (!std::getline(file, line) || line.empty()) {
-    std::cerr << "Error: File is empty or missing number of tables"
-              << std::endl;
+    std::cerr << "Error: File is empty or missing number of tables" << std::endl;
     file.close();
     errorOccurred_ = true;
     return;
   }
   if (!isValidNumTables(line) || std::stoi(line) <= 0) {
-    std::cerr << "Error in line " << lineNum << ": Invalid number of tables"
-              << std::endl;
+    std::cerr << "Error in line " << lineNum << ": Invalid number of tables" << std::endl;
     file.close();
     errorOccurred_ = true;
     return;
@@ -107,15 +105,13 @@ void ComputerClub::readFromFile(const std::string& filename) {
   lineNum++;
 
   if (!std::getline(file, line) || line.empty()) {
-    std::cerr << "Error in line " << lineNum << ": Missing start and end time"
-              << std::endl;
+    std::cerr << "Error in line " << lineNum << ": Missing start and end time" << std::endl;
     file.close();
     errorOccurred_ = true;
     return;
   }
   if (!isValidTimeFormat(line)) {
-    std::cerr << "Error in line " << lineNum
-              << ": Invalid start or end time format" << std::endl;
+    std::cerr << "Error in line " << lineNum << ": Invalid start or end time format" << std::endl;
     file.close();
     errorOccurred_ = true;
     return;
@@ -125,15 +121,13 @@ void ComputerClub::readFromFile(const std::string& filename) {
   lineNum++;
 
   if (!std::getline(file, line) || line.empty()) {
-    std::cerr << "Error in line " << lineNum << ": Missing hourly rate"
-              << std::endl;
+    std::cerr << "Error in line " << lineNum << ": Missing hourly rate" << std::endl;
     file.close();
     errorOccurred_ = true;
     return;
   }
   if (!isValidHourlyRate(line)) {
-    std::cerr << "Error in line " << lineNum << ": Invalid hourly rate"
-              << std::endl;
+    std::cerr << "Error in line " << lineNum << ": Invalid hourly rate" << std::endl;
     file.close();
     errorOccurred_ = true;
     return;
@@ -144,43 +138,44 @@ void ComputerClub::readFromFile(const std::string& filename) {
   std::string prevTime = "00:00";
   while (std::getline(file, line)) {
     if (line.empty()) {
-      std::cerr << "Error in line " << lineNum << ": Empty event line"
-                << std::endl;
+      std::cerr << "Error in line " << lineNum << ": Empty event line" << std::endl;
       file.close();
       errorOccurred_ = true;
       return;
     }
-    if (!isValidEventFormat(line)) {
-      std::cerr << "Error in line " << lineNum << ": Invalid event format"
-                << std::endl;
-      file.close();
-      errorOccurred_ = true;
-      return;
-    }
+
     std::istringstream iss(line);
     std::string time, eventId, clientName;
     iss >> time >> eventId >> clientName;
+
     if (!isValidTime(time)) {
-      std::cerr << "Error in line " << lineNum << ": Invalid time format"
-                << std::endl;
+      std::cerr << "Error in line " << lineNum << ": Invalid time format" << std::endl;
       file.close();
       errorOccurred_ = true;
       return;
     }
+
     if (!isSequentialTime(prevTime, time)) {
-      std::cerr << "Error in line " << lineNum
-                << ": Events are not in sequential time order" << std::endl;
+      std::cerr << "Error in line " << lineNum << ": Events are not in sequential time order" << std::endl;
       file.close();
       errorOccurred_ = true;
       return;
     }
+
     if (!isValidClientName(clientName)) {
-      std::cerr << "Error in line " << lineNum << ": Invalid client name"
-                << std::endl;
+      std::cerr << "Error in line " << lineNum << ": Invalid client name" << std::endl;
       file.close();
       errorOccurred_ = true;
       return;
     }
+
+    if (!isValidEventFormat(line)) {
+      std::cerr << "Error in line " << lineNum << ": Invalid event format" << std::endl;
+      file.close();
+      errorOccurred_ = true;
+      return;
+    }
+
     prevTime = time;
     auto event = createEvent(line);
     processEvent(event);
