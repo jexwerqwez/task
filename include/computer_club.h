@@ -37,17 +37,22 @@ class ComputerClub {
   bool isValidHourlyRate(const std::string& line) const;
   bool isValidEventFormat(const std::string& line) const;
   bool isValidClientName(const std::string& clientName) const;
-  bool isSequentialTime(const std::string& prevTime, const std::string& currTime) const;
+  bool isSequentialTime(const std::string& prevTime,
+                        const std::string& currTime) const;
   std::unique_ptr<Event> createEvent(const std::string& line);
   void processEvent(const std::unique_ptr<Event>& event);
 
  public:
   void readFromFile(const std::string& filename);
   void printData();
-  void clientArrives(const std::string& time, const std::string& clientName, std::vector<std::string>& outputEvents);
-  void clientSits(const std::string& time, const std::string& clientName, int tableNumber, std::vector<std::string>& outputEvents);
-  void clientWaits(const std::string& time, const std::string& clientName, std::vector<std::string>& outputEvents);
-  void clientLeaves(const std::string& time, const std::string& clientName, std::vector<std::string>& outputEvents);
+  void clientArrives(const std::string& time, const std::string& clientName,
+                     std::vector<std::string>& outputEvents);
+  void clientSits(const std::string& time, const std::string& clientName,
+                  int tableNumber, std::vector<std::string>& outputEvents);
+  void clientWaits(const std::string& time, const std::string& clientName,
+                   std::vector<std::string>& outputEvents);
+  void clientLeaves(const std::string& time, const std::string& clientName,
+                    std::vector<std::string>& outputEvents);
   int calculateMinutes(const std::string& start, const std::string& end) const;
   void closeClub(std::vector<std::string>& outputEvents);
   std::string formatMinutes(int totalMinutes) const;

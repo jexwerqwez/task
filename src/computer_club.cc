@@ -43,34 +43,35 @@ bool ComputerClub::isValidEventFormat(const std::string& line) const {
 }
 
 bool ComputerClub::isValidClientName(const std::string& clientName) const {
-    std::regex clientNamePattern(R"([a-z0-9_-]+)");
-    return std::regex_match(clientName, clientNamePattern);
+  std::regex clientNamePattern(R"([a-z0-9_-]+)");
+  return std::regex_match(clientName, clientNamePattern);
 }
 
-bool ComputerClub::isSequentialTime(const std::string& prevTime, const std::string& currTime) const {
-    return prevTime <= currTime;
+bool ComputerClub::isSequentialTime(const std::string& prevTime,
+                                    const std::string& currTime) const {
+  return prevTime <= currTime;
 }
 
 std::unique_ptr<Event> ComputerClub::createEvent(const std::string& line) {
-    std::istringstream iss(line);
-    std::string time, eventId, clientName;
-    iss >> time >> eventId >> clientName;
-    if (eventId == "1") {
-        return std::make_unique<ClientArrivalEvent>(time, clientName);
-    } else if (eventId == "2") {
-        int tableNumber;
-        iss >> tableNumber;
-        if (tableNumber < 1 || tableNumber > numTables_) {
-            return std::make_unique<ErrorEvent>(time, "Invalid table number");
-        }
-        return std::make_unique<ClientSitEvent>(time, clientName, tableNumber);
-    } else if (eventId == "3") {
-        return std::make_unique<ClientWaitEvent>(time, clientName);
-    } else if (eventId == "4") {
-        return std::make_unique<ClientLeaveEvent>(time, clientName);
-    } else {
-        return std::make_unique<ErrorEvent>(time, "Unknown event ID");
+  std::istringstream iss(line);
+  std::string time, eventId, clientName;
+  iss >> time >> eventId >> clientName;
+  if (eventId == "1") {
+    return std::make_unique<ClientArrivalEvent>(time, clientName);
+  } else if (eventId == "2") {
+    int tableNumber;
+    iss >> tableNumber;
+    if (tableNumber < 1 || tableNumber > numTables_) {
+      return std::make_unique<ErrorEvent>(time, "Invalid table number");
     }
+    return std::make_unique<ClientSitEvent>(time, clientName, tableNumber);
+  } else if (eventId == "3") {
+    return std::make_unique<ClientWaitEvent>(time, clientName);
+  } else if (eventId == "4") {
+    return std::make_unique<ClientLeaveEvent>(time, clientName);
+  } else {
+    return std::make_unique<ErrorEvent>(time, "Unknown event ID");
+  }
 }
 
 void ComputerClub::processEvent(const std::unique_ptr<Event>& event) {
@@ -133,43 +134,48 @@ void ComputerClub::readFromFile(const std::string& filename) {
   hourlyRate_ = std::stoi(line);
   lineNum++;
 
-    std::string prevTime = "00:00";
-    while (std::getline(file, line)) {
-        if (line.empty()) {
-            std::cerr << "Error in line " << lineNum << ": Empty event line" << std::endl;
-            file.close();
-            return;
-        }
-        if (!isValidEventFormat(line)) {
-            std::cerr << "Error in line " << lineNum << ": Invalid event format" << std::endl;
-            file.close();
-            return;
-        }
-        std::istringstream iss(line);
-        std::string time, eventId, clientName;
-        iss >> time >> eventId >> clientName;
-        if (!isValidTime(time)) {
-            std::cerr << "Error in line " << lineNum << ": Invalid time format" << std::endl;
-            file.close();
-            return;
-        }
-        if (!isSequentialTime(prevTime, time)) {
-            std::cerr << "Error in line " << lineNum << ": Events are not in sequential time order" << std::endl;
-            file.close();
-            return;
-        }
-        if (!isValidClientName(clientName)) {
-            std::cerr << "Error in line " << lineNum << ": Invalid client name" << std::endl;
-            file.close();
-            return;
-        }
-        prevTime = time;
-        auto event = createEvent(line);
-        processEvent(event);
-        lineNum++;
+  std::string prevTime = "00:00";
+  while (std::getline(file, line)) {
+    if (line.empty()) {
+      std::cerr << "Error in line " << lineNum << ": Empty event line"
+                << std::endl;
+      file.close();
+      return;
     }
+    if (!isValidEventFormat(line)) {
+      std::cerr << "Error in line " << lineNum << ": Invalid event format"
+                << std::endl;
+      file.close();
+      return;
+    }
+    std::istringstream iss(line);
+    std::string time, eventId, clientName;
+    iss >> time >> eventId >> clientName;
+    if (!isValidTime(time)) {
+      std::cerr << "Error in line " << lineNum << ": Invalid time format"
+                << std::endl;
+      file.close();
+      return;
+    }
+    if (!isSequentialTime(prevTime, time)) {
+      std::cerr << "Error in line " << lineNum
+                << ": Events are not in sequential time order" << std::endl;
+      file.close();
+      return;
+    }
+    if (!isValidClientName(clientName)) {
+      std::cerr << "Error in line " << lineNum << ": Invalid client name"
+                << std::endl;
+      file.close();
+      return;
+    }
+    prevTime = time;
+    auto event = createEvent(line);
+    processEvent(event);
+    lineNum++;
+  }
 
-    file.close();
+  file.close();
 }
 
 void ComputerClub::printData() {
@@ -185,8 +191,7 @@ void ComputerClub::printData() {
 
   for (int i = 1; i <= numTables_; ++i) {
     int totalMinutes = tableUsage_[i];
-    int hoursCharged =
-        (totalMinutes + 59) / 60;
+    int hoursCharged = (totalMinutes + 59) / 60;
     int revenue = hoursCharged * hourlyRate_;
     std::cout << i << " " << revenue << " " << formatMinutes(totalMinutes)
               << std::endl;
