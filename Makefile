@@ -51,3 +51,4 @@ clean:
 	rm -f $(EXECUTABLE)
 	rm -f $(TEST_EXECUTABLE)
 	rm -rf $(INC_DIR)/*.gch
+	rm -rf tests/output.txt

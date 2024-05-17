@@ -43,25 +43,25 @@ TEST_F(ComputerClubTest, Test1) {
     runTest("tests/test_file1_in.txt", "tests/test_file1_out.txt");
 }
 
-// TEST_F(ComputerClubTest, Test2) {
-//     runTest("tests/test_file2_in.txt", "tests/test_file2_out.txt");
-// }
+TEST_F(ComputerClubTest, Test2) {
+    runTest("tests/test_file2_in.txt", "tests/test_file2_out.txt");
+}
 
-// TEST_F(ComputerClubTest, Test3) {
-//     runTest("tests/test_file3_in.txt", "tests/test_file3_out.txt");
-// }
+TEST_F(ComputerClubTest, Test3) {
+    runTest("tests/test_file3_in.txt", "tests/test_file3_out.txt");
+}
 
-// TEST_F(ComputerClubTest, Test4) {
-//     runTest("tests/test_file4_in.txt", "tests/test_file4_out.txt");
-// }
+TEST_F(ComputerClubTest, Test4) {
+    runTest("tests/test_file4_in.txt", "tests/test_file4_out.txt");
+}
 
-// TEST_F(ComputerClubTest, Test5) {
-//     runTest("tests/test_file5_in.txt", "tests/test_file5_out.txt");
-// }
+TEST_F(ComputerClubTest, Test5) {
+    runTest("tests/test_file5_in.txt", "tests/test_file5_out.txt");
+}
 
-// TEST_F(ComputerClubTest, Test6) {
-//     runTest("tests/test_file6_in.txt", "tests/test_file6_out.txt");
-// }
+TEST_F(ComputerClubTest, Test6) {
+    runTest("tests/test_file6_in.txt", "tests/test_file6_out.txt");
+}
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
